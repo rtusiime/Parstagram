@@ -58,10 +58,12 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i(TAG, "OnClick register button");
 
                 // Create the ParseUser
-                ParseUser user = new ParseUser();
+                final ParseUser user = new ParseUser();
                 // Set core properties
-                user.setUsername(etUsername.getText().toString());
-                user.setPassword(etPassword.getText().toString());
+                final String username = etUsername.getText().toString();
+                final String password = etPassword.getText().toString();
+                user.setUsername(username);
+                user.setPassword(password);
 
                 // Invoke signUpInBackground
                 user.signUpInBackground(new SignUpCallback() {
@@ -71,8 +73,9 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        goMainActivity();
-                        Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                        //goMainActivity();
+                        Toast.makeText(LoginActivity.this, "Success! Log In with new credentials", Toast.LENGTH_LONG).show();
+                        Log.d("Users" ,"username = " + username + " password = " + password);
                     }
                 });
             }

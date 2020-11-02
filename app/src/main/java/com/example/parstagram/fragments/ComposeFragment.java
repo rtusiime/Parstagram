@@ -1,5 +1,6 @@
 package com.example.parstagram.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -47,6 +50,7 @@ public class ComposeFragment extends Fragment {
     private File photoFile;
     public String photoFileName = "photo.jpg";
     Toolbar toolbar;
+    OnPostClickedListener listener;
 
     public ComposeFragment() {
         // Required empty public constructor
@@ -95,8 +99,23 @@ public class ComposeFragment extends Fragment {
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser, photoFile);
+                listener.onPostClicked();
+
             }
         });
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener = (OnPostClickedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnArticleSelectedListener");
+        }
+    }
+
+    public interface OnPostClickedListener {
+        public void onPostClicked();
     }
 
     private void launchCamera() {
@@ -170,4 +189,5 @@ public class ComposeFragment extends Fragment {
             }
         });
     }
+
 }

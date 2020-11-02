@@ -22,7 +22,7 @@
         android:layout_weight="1"
         android:fontFamily="@font/cream_cake"
         android:gravity="center"
-        android:text="Parstagram"
+        android:text="Raystagram"
         android:textColor="@color/black"
         android:textSize="75sp" />
 

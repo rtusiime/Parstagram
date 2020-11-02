@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ComposeFragment.OnPostClickedListener {
 
     public static final String TAG = "MainActivity";
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -54,5 +54,12 @@ public class MainActivity extends AppCompatActivity {
         });
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_home);
+    }
+
+    @Override
+    public void onPostClicked() {
+        Fragment fragment = (PostsFragment) new PostsFragment();
+        ((PostsFragment) fragment).queryPosts();
+        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
     }
 }
