@@ -8,13 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
+    private Button btnRegister;
+    private ProgressBar pbLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,39 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username, password);
             }
         });
+
+        btnRegister = findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "OnClick register button");
+
+                // Create the ParseUser
+                ParseUser user = new ParseUser();
+                // Set core properties
+                user.setUsername(etUsername.getText().toString());
+                user.setPassword(etPassword.getText().toString());
+
+                // Invoke signUpInBackground
+                user.signUpInBackground(new SignUpCallback() {
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Issue with login", e);
+                            Toast.makeText(LoginActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        goMainActivity();
+                        Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        // on some click or some loading we need to wait for...
+        pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
+        pbLoading.setVisibility(ProgressBar.VISIBLE);
+        // run a background job and once complete
+        pbLoading.setVisibility(ProgressBar.INVISIBLE);
     }
 
     private void loginUser(String username, String password) {

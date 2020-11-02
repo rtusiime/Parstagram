@@ -5,14 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="@dimen/activity_horizontal_margin"
     tools:context=".MainActivity">
-
-    <include
-        layout="@layout/toolbar_main"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        />
 
     <FrameLayout
         android:id="@+id/flContainer"
@@ -26,5 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
+        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/black"
         app:menu="@menu/menu_bottom_navigation" />
 </RelativeLayout>
